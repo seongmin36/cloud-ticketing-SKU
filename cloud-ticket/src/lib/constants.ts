@@ -1,7 +1,3 @@
-/**
- * 전역 상수
- */
-
 // 대기 시간 (밀리초)
 export const LOADING_DURATION_MS = 15000; // 15초
 

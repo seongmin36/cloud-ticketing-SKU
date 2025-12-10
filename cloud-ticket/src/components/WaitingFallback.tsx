@@ -37,7 +37,9 @@ export default function WaitingFallback() {
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
-  const timeDisplay = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  const timeDisplay = `${minutes.toString().padStart(2, "0")}:${seconds
+    .toString()
+    .padStart(2, "0")}`;
 
   return (
     <div className="min-h-screen bg-[#171717] flex items-center justify-center p-4">

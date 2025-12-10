@@ -162,7 +162,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 3. 이메일 입력: "test@example.com"
 4. "예약하기" 버튼 클릭
 5. 성공 메시지 확인: "예약 요청이 전송되었습니다!"
-6. 콘솔에서 `orderId` 확인
+6. 콘솔에서 `order_id` 확인
 
 ### 2. 검증 에러 테스트
 

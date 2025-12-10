@@ -154,7 +154,7 @@ import CalendarIcon from "@/assets/calendar.svg";
 // Response (Success)
 {
   "ok": true,
-  "orderId": "TK-1234"
+  "order_id": "TK-1234"
 }
 
 // Response (Error)

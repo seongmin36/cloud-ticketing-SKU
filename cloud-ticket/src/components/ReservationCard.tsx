@@ -87,9 +87,9 @@ export default function ReservationCard() {
       const params = new URLSearchParams({
         name: formValues.name,
         email: formValues.email,
-        orderId: data.orderId,
+        order_id: data.order_id,
       });
-      
+
       router.push(`${ROUTES.WAITING}?${params.toString()}`);
     } catch (error) {
       console.error("예약 에러:", error);

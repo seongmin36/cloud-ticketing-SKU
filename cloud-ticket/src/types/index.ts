@@ -22,7 +22,7 @@ export interface ReservationRequest extends ReservationFormValues {
 // 예약 응답
 export interface ReservationResponse {
   ok: boolean;
-  orderId?: string;
+  order_id?: string;
   error?: string;
 }
 

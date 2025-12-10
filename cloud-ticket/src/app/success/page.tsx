@@ -7,6 +7,10 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { ROUTES } from "@/lib/constants";
 import { mockEvent } from "@/mocks/event";
+import Icon from "@/components/common/Icon";
+import CalendarIcon from "@/assets/calendar.svg";
+import PinIcon from "@/assets/pin.svg";
+import DownloadIcon from "@/assets/download.svg";
 
 export const metadata: Metadata = {
   title: "예약 완료 - SKU Ticketing",
@@ -16,7 +20,7 @@ export const metadata: Metadata = {
 interface SearchParams {
   name?: string;
   email?: string;
-  orderId?: string;
+  order_id?: string;
 }
 
 export default async function SuccessPage({
@@ -25,10 +29,10 @@ export default async function SuccessPage({
   searchParams: Promise<SearchParams>;
 }) {
   const params = await searchParams;
-  const { name, email, orderId } = params;
+  const { name, email, order_id } = params;
 
   // 필수 파라미터 체크
-  if (!name || !email || !orderId) {
+  if (!name || !email || !order_id) {
     return (
       <main className="min-h-screen bg-[#FAFAFA] flex items-center justify-center p-4">
         <div className="text-center space-y-4">
@@ -100,9 +104,7 @@ export default async function SuccessPage({
                 <p className="text-xs font-semibold uppercase tracking-[0.05em] text-[#737373]">
                   Order ID
                 </p>
-                <p className="text-sm font-normal text-[#171717]">
-                  {orderId}
-                </p>
+                <p className="text-sm font-normal text-[#171717]">{order_id}</p>
               </div>
             </div>
           </div>
@@ -127,18 +129,7 @@ export default async function SuccessPage({
               {/* 날짜 */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <svg
-                    className="w-4 h-4 text-[#A1A1A1]"
-                    fill="none"
-                    viewBox="0 0 16 16"
-                    stroke="currentColor"
-                    strokeWidth="1.33"
-                  >
-                    <rect x="2" y="2.67" width="12" height="12" rx="2" ry="2" />
-                    <line x1="5.33" y1="1.33" x2="5.33" y2="4" />
-                    <line x1="10.67" y1="1.33" x2="10.67" y2="4" />
-                    <line x1="2" y1="6.67" x2="14" y2="6.67" />
-                  </svg>
+                  <Icon icon={CalendarIcon} size={16} color="#A1A1A1" />
                   <span className="text-xs font-medium uppercase text-[#A1A1A1]">
                     날짜
                   </span>
@@ -151,16 +142,7 @@ export default async function SuccessPage({
               {/* 위치 */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <svg
-                    className="w-4 h-4 text-[#A1A1A1]"
-                    fill="none"
-                    viewBox="0 0 16 16"
-                    stroke="currentColor"
-                    strokeWidth="1.33"
-                  >
-                    <path d="M13.33 6.67c0 3.33-5.33 8-5.33 8s-5.33-4.67-5.33-8a5.33 5.33 0 0 1 10.66 0z" />
-                    <circle cx="8" cy="6.67" r="2" />
-                  </svg>
+                  <Icon icon={PinIcon} size={16} color="#A1A1A1" />
                   <span className="text-xs font-medium uppercase text-[#A1A1A1]">
                     위치
                   </span>
@@ -174,21 +156,8 @@ export default async function SuccessPage({
 
           {/* CardFooter - 다운로드 버튼 */}
           <div className="px-6 py-6 border-t border-[#F5F5F5]">
-            <button
-              className="w-full h-9 flex items-center justify-center gap-2 bg-white border border-black/10 rounded-lg text-sm font-medium text-[#525252] tracking-[-0.011em] hover:bg-gray-50 active:bg-gray-100 transition-all"
-              onClick={() => alert("티켓 다운로드 기능은 추후 구현 예정입니다.")}
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 16 16"
-                stroke="currentColor"
-                strokeWidth="1.33"
-              >
-                <path d="M14 10v2.67A1.33 1.33 0 0 1 12.67 14H3.33A1.33 1.33 0 0 1 2 12.67V10" />
-                <polyline points="4.67,6.67 8,10 11.33,6.67" />
-                <line x1="8" y1="10" x2="8" y2="2" />
-              </svg>
+            <button className="w-full h-9 flex items-center justify-center gap-2 bg-white border border-black/10 rounded-lg text-sm font-medium text-[#525252] tracking-[-0.011em] hover:bg-gray-50 active:bg-gray-100 transition-all">
+              <Icon icon={DownloadIcon} size={16} color="#525252" />
               티켓 다운로드
             </button>
           </div>

@@ -12,14 +12,14 @@ export async function POST(req: NextRequest) {
       );
     }
     // 예약 번호 생성
-    const orderId = `TK-${Math.floor(1000 + Math.random() * 9000)}`;
+    const order_id = `TK-${Math.floor(1000 + Math.random() * 9000)}`;
 
     // 예약 정보 저장
     const { error } = await supabaseServer.from("reservations").insert({
       name,
       email,
       event_id: event_id,
-      order_id: orderId,
+      order_id: order_id,
     });
 
     if (error) {
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
         { status: 500 }
       );
     }
-    return NextResponse.json({ ok: true, orderId }, { status: 201 });
+    return NextResponse.json({ ok: true, order_id }, { status: 201 });
   } catch (err) {
     console.error(err);
     return NextResponse.json(
