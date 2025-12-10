@@ -1,12 +1,10 @@
 "use client";
 
-/**
- * WaitingFallback - 대기열 UI (Suspense Fallback)
- * Figma: QueueStatus (1:55)
- */
-
 import { useState, useEffect } from "react";
 import { LOADING_DURATION_SEC } from "@/lib/constants";
+import Icon from "@/components/common/Icon";
+import LoadingSandIcon from "@/assets/loading-sand.svg";
+import ClockIcon from "@/assets/clock.svg";
 
 export default function WaitingFallback() {
   const [progress, setProgress] = useState(0);
@@ -47,22 +45,7 @@ export default function WaitingFallback() {
         {/* 아이콘 */}
         <div className="flex justify-center">
           <div className="w-14 h-14 rounded-full bg-[#262626] flex items-center justify-center">
-            <svg
-              className="w-8 h-8 text-[#A1A1A1] animate-spin"
-              fill="none"
-              viewBox="0 0 32 32"
-            >
-              <circle
-                cx="16"
-                cy="16"
-                r="12"
-                stroke="currentColor"
-                strokeWidth="2.67"
-                strokeDasharray="75.4"
-                strokeDashoffset="20"
-                strokeLinecap="round"
-              />
-            </svg>
+            <Icon icon={LoadingSandIcon} size={32} color="#A1A1A1" />
           </div>
         </div>
 
@@ -81,16 +64,7 @@ export default function WaitingFallback() {
           {/* 상단: 남은 시간 */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <svg
-                className="w-5 h-5 text-[#D4D4D4]"
-                fill="none"
-                viewBox="0 0 20 20"
-                stroke="currentColor"
-                strokeWidth="1.67"
-              >
-                <circle cx="10" cy="10" r="8.33" />
-                <path d="M10 5v5l3.33 3.33" />
-              </svg>
+              <Icon icon={ClockIcon} size={20} color="#D4D4D4" />
               <span className="text-sm font-medium text-[#D4D4D4]">
                 남은 시간
               </span>
