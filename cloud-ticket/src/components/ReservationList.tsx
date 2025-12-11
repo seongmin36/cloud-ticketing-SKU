@@ -8,6 +8,7 @@ interface ReservationListProps {
   initialEvents: Event[];
 }
 
+// 행사 리스트 컴포넌트
 export default function ReservationList({
   initialEvents,
 }: ReservationListProps) {
