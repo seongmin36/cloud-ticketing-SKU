@@ -2,6 +2,7 @@
 
 import { useGetEventList } from "@/app/hooks/useGetEventList";
 import { useRouter } from "next/navigation";
+import EventCard from "./EventCard";
 
 export default function ReservationList() {
   const router = useRouter();
@@ -14,7 +15,7 @@ export default function ReservationList() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="text-gray-500">이벤트를 불러오는 중...</div>
+        <div className="text-[#737373]">이벤트를 불러오는 중...</div>
       </div>
     );
   }
@@ -28,25 +29,40 @@ export default function ReservationList() {
   }
 
   return (
-    <div className="w-full max-w-2xl space-y-4">
-      {eventList.map((event) => {
-        return (
-          <button
-            key={event.id}
-            onClick={() => handleClick(event.id)}
-            className="w-full p-6 bg-white rounded-lg border border-gray-200 hover:border-blue-500 hover:shadow-md transition-all text-left"
-          >
-            <h3 className="text-lg font-semibold text-gray-900">
-              {event.title}
-            </h3>
-            <p className="mt-2 text-sm text-gray-600">{event.description}</p>
-            <div className="mt-3 flex items-center gap-4 text-sm text-gray-500">
-              <span>📅 {event.start_at}</span>
-              <span>📍 {event.location}</span>
-            </div>
-          </button>
-        );
-      })}
+    <div className="w-full max-w-[672px] mx-auto px-4 sm:px-0">
+      {/* Header */}
+      <div className="mb-8 space-y-2">
+        <h1 className="text-[30px] font-bold text-[#171717] leading-[1.2] tracking-[-0.012em]">
+          행사 리스트
+        </h1>
+        <p className="text-base text-[#737373] leading-normal tracking-[-0.02em]">
+          Discover and book tickets for the latest tech gatherings.
+        </p>
+      </div>
+
+      {/* Event Cards */}
+      <div className="space-y-7">
+        {eventList.map((event, index) => {
+          // 각 이벤트에 다른 배지 적용 (예시)
+          let badge = "Conference";
+
+          // 이벤트별 배지 커스터마이징 (실제로는 API에서 받아와야 함)
+          if (index === 1) {
+            badge = "Workshop";
+          } else if (index === 2) {
+            badge = "Networking";
+          }
+
+          return (
+            <EventCard
+              key={event.id}
+              event={event}
+              onClick={handleClick}
+              badge={badge}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }

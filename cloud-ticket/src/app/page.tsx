@@ -8,10 +8,8 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#FAFAFA] flex items-center justify-center p-4">
-      <div className="w-full flex flex-col items-center justify-center">
-        <ReservationList />
-      </div>
+    <main className="min-h-screen bg-[#FAFAFA] py-10 px-4 sm:py-16">
+      <ReservationList />
     </main>
   );
 }
