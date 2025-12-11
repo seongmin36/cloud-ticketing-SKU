@@ -8,7 +8,7 @@ interface ApiResponse<T> {
 }
 
 // 단일 이벤트 조회 API
-async function getEvent(event_id: string): Promise<Event> {
+async function getEvent(event_id: number): Promise<Event> {
   const response = await fetch(`/api/events/${event_id}`);
 
   if (!response.ok) {
@@ -24,7 +24,7 @@ async function getEvent(event_id: string): Promise<Event> {
   return result.data;
 }
 
-export const useGetEvent = (event_id: string) => {
+export const useGetEvent = (event_id: number) => {
   return useQuery({
     queryKey: ["event", event_id],
     queryFn: () => getEvent(event_id),

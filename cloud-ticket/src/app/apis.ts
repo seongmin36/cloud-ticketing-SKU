@@ -92,22 +92,3 @@ export async function getReservation(id: number): Promise<Reservation> {
 
   return result.data;
 }
-
-// 주문번호로 예약 조회
-export async function getReservationByOrderId(
-  orderId: string
-): Promise<Reservation> {
-  const response = await fetch(`/api/reservations/order/${orderId}`);
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch reservation");
-  }
-
-  const result: ApiResponse<Reservation> = await response.json();
-
-  if (!result.success || !result.data) {
-    throw new Error(result.error || "Failed to fetch reservation");
-  }
-
-  return result.data;
-}

@@ -12,15 +12,28 @@ import { useSearchParams } from "next/navigation";
 
 export default function SuccessPage() {
   const searchParams = useSearchParams();
-  const { name, email, order_id, event_id } = Object.fromEntries(
-    searchParams.entries()
-  );
-  const { data: event } = useGetEvent(event_id as string);
+  const name = searchParams.get("name");
+  const email = searchParams.get("email");
+  const order_id = searchParams.get("order_id");
+  const event_id = searchParams.get("event_id");
 
-  console.log(event);
+  // 이벤트 정보 조회
+  const { data: event, isLoading, isError } = useGetEvent(Number(event_id));
 
-  // 필수 파라미터 체크
-  if (!name || !email || !order_id) {
+  // 로딩 상태
+  if (isLoading) {
+    return (
+      <main className="min-h-screen bg-[#FAFAFA] flex items-center justify-center p-4">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#171717] mx-auto"></div>
+          <p className="text-lg text-[#737373]">예약 정보를 불러오는 중...</p>
+        </div>
+      </main>
+    );
+  }
+
+  // 필수 파라미터 체크 또는 에러
+  if (!name || !email || !order_id || !event_id || isError || !event) {
     return (
       <main className="min-h-screen bg-[#FAFAFA] flex items-center justify-center p-4">
         <div className="text-center space-y-4">
@@ -28,7 +41,7 @@ export default function SuccessPage() {
             예약 정보가 존재하지 않습니다.
           </p>
           <Link
-            href={ROUTES.RESERVE}
+            href={ROUTES.HOME}
             className="inline-block px-6 py-3 bg-[#171717] text-white rounded-lg hover:bg-[#262626] transition-all"
           >
             처음 화면으로 돌아가기
@@ -37,8 +50,6 @@ export default function SuccessPage() {
       </main>
     );
   }
-
-  console.log(event);
   return (
     <main className="min-h-screen bg-[#FAFAFA] flex items-center justify-center p-4">
       <div className="w-full max-w-[448px] space-y-8">
@@ -103,7 +114,7 @@ export default function SuccessPage() {
             {/* 행사명 */}
             <div className="space-y-1">
               <h3 className="text-lg font-bold text-[#171717] tracking-[-0.024em]">
-                {event?.title}
+                {event.title}
               </h3>
               <p className="text-sm text-[#737373] tracking-[-0.011em]">
                 General Admission
@@ -124,7 +135,7 @@ export default function SuccessPage() {
                   </span>
                 </div>
                 <span className="text-sm font-medium text-[#171717] tracking-[-0.011em]">
-                  {dayjs(event?.start_at).format("YYYY.MM.DD • HH:mm A")}
+                  {dayjs(event.start_at).format("YYYY.MM.DD • HH:mm A")}
                 </span>
               </div>
 
@@ -137,7 +148,7 @@ export default function SuccessPage() {
                   </span>
                 </div>
                 <span className="text-sm font-medium text-[#171717] tracking-[-0.011em]">
-                  {event?.location}
+                  {event.location}
                 </span>
               </div>
             </div>

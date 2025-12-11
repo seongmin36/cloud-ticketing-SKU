@@ -20,10 +20,12 @@ export default function WaitingGate() {
       const name = searchParams.get("name");
       const email = searchParams.get("email");
       const order_id = searchParams.get("order_id");
+      const event_id = searchParams.get("event_id");
 
       if (name) params.set("name", name);
       if (email) params.set("email", email);
       if (order_id) params.set("order_id", order_id);
+      if (event_id) params.set("event_id", event_id);
 
       // Success 페이지로 이동
       router.push(`${ROUTES.SUCCESS}?${params.toString()}`);

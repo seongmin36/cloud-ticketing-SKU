@@ -6,7 +6,8 @@ export const LOADING_DURATION_SEC = LOADING_DURATION_MS / 1000;
 
 // API 엔드포인트
 export const API_ENDPOINTS = {
-  RESERVE: "/api/reserve",
+  EVENTS: "/api/events",
+  RESERVATIONS: "/api/reservations",
 } as const;
 
 // 라우트 경로

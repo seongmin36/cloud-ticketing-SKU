@@ -4,9 +4,10 @@ import { supabaseServer } from "@/libs/supabase/server";
 // 단일 예약 조회
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await props.params;
     const reservationId = Number(params.id);
 
     if (isNaN(reservationId) || reservationId <= 0) {
