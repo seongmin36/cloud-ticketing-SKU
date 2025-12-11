@@ -1,8 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-console.log("URL:", process.env.SUPABASE_URL);
-console.log("SERVICE ROLE KEY:", process.env.SUPABASE_SERVICE_ROLE_KEY);
-
+// Supabase 서버 클라이언트 (서버사이드 전용)
 export const supabaseServer = createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!,

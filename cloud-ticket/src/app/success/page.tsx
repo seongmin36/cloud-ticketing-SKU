@@ -1,35 +1,23 @@
-/**
- * Success Page - 예약 완료 페이지
- * Figma: ReservationSuccess (1:83)
- */
+"use client";
 
-import { Metadata } from "next";
 import Link from "next/link";
 import { ROUTES } from "@/lib/constants";
-import { mockEvent } from "@/mocks/event";
 import Icon from "@/components/common/Icon";
 import CalendarIcon from "@/assets/calendar.svg";
 import PinIcon from "@/assets/pin.svg";
 import DownloadIcon from "@/assets/download.svg";
+import dayjs from "dayjs";
+import { useGetEvent } from "../hooks";
+import { useSearchParams } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "예약 완료 - SKU Ticketing",
-  description: "예약이 성공적으로 완료되었습니다.",
-};
+export default function SuccessPage() {
+  const searchParams = useSearchParams();
+  const { name, email, order_id, event_id } = Object.fromEntries(
+    searchParams.entries()
+  );
+  const { data: event } = useGetEvent(event_id as string);
 
-interface SearchParams {
-  name?: string;
-  email?: string;
-  order_id?: string;
-}
-
-export default async function SuccessPage({
-  searchParams,
-}: {
-  searchParams: Promise<SearchParams>;
-}) {
-  const params = await searchParams;
-  const { name, email, order_id } = params;
+  console.log(event);
 
   // 필수 파라미터 체크
   if (!name || !email || !order_id) {
@@ -50,6 +38,7 @@ export default async function SuccessPage({
     );
   }
 
+  console.log(event);
   return (
     <main className="min-h-screen bg-[#FAFAFA] flex items-center justify-center p-4">
       <div className="w-full max-w-[448px] space-y-8">
@@ -114,7 +103,7 @@ export default async function SuccessPage({
             {/* 행사명 */}
             <div className="space-y-1">
               <h3 className="text-lg font-bold text-[#171717] tracking-[-0.024em]">
-                {mockEvent.title}
+                {event?.title}
               </h3>
               <p className="text-sm text-[#737373] tracking-[-0.011em]">
                 General Admission
@@ -135,7 +124,7 @@ export default async function SuccessPage({
                   </span>
                 </div>
                 <span className="text-sm font-medium text-[#171717] tracking-[-0.011em]">
-                  {mockEvent.start_at}
+                  {dayjs(event?.start_at).format("YYYY.MM.DD • HH:mm A")}
                 </span>
               </div>
 
@@ -148,7 +137,7 @@ export default async function SuccessPage({
                   </span>
                 </div>
                 <span className="text-sm font-medium text-[#171717] tracking-[-0.011em]">
-                  Seoul, SKU Bukak Hall
+                  {event?.location}
                 </span>
               </div>
             </div>

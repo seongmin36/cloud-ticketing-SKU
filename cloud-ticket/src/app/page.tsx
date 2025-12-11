@@ -1,4 +1,4 @@
-import ReservationCard from "@/components/ReservationCard";
+import ReservationList from "@/components/ReservationList";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#FAFAFA] flex items-center justify-center p-4">
       <div className="w-full flex flex-col items-center justify-center">
-        <ReservationCard />
+        <ReservationList />
       </div>
     </main>
   );

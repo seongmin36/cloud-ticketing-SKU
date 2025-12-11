@@ -19,11 +19,21 @@ export interface ReservationRequest extends ReservationFormValues {
   event_id: number;
 }
 
+export interface Reservation {
+  id: number;
+  event_id: number;
+  name: string;
+  email: string;
+  order_id: string;
+  created_at: string;
+}
+
 // 예약 응답
 export interface ReservationResponse {
   ok: boolean;
   order_id?: string;
   error?: string;
+  data?: Reservation;
 }
 
 // 폼 에러

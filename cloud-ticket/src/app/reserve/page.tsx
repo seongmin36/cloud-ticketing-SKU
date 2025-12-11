@@ -1,8 +1,3 @@
-/**
- * Reserve Page - 서버 컴포넌트
- * 티켓 예약 메인 페이지
- */
-
 import ReservationCard from "@/components/ReservationCard";
 import { Metadata } from "next";
 
