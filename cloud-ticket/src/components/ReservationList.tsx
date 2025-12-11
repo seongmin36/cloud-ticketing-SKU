@@ -1,29 +1,37 @@
 "use client";
 
-import { useGetEventList } from "@/app/hooks/useGetEventList";
 import { useRouter } from "next/navigation";
 import EventCard from "./EventCard";
+import { Event } from "@/types";
 
-export default function ReservationList() {
+interface ReservationListProps {
+  initialEvents: Event[];
+}
+
+export default function ReservationList({
+  initialEvents,
+}: ReservationListProps) {
   const router = useRouter();
-  const { data: eventList, isLoading, isError } = useGetEventList();
 
   const handleClick = (eventId: number) => {
     router.push(`/reserve?event_id=${eventId}`);
   };
 
-  if (isLoading) {
+  // SSG로 받은 데이터가 없을 때
+  if (!initialEvents || initialEvents.length === 0) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <div className="text-[#737373]">이벤트를 불러오는 중...</div>
-      </div>
-    );
-  }
-
-  if (isError || !eventList) {
-    return (
-      <div className="flex items-center justify-center p-8">
-        <div className="text-red-500">이벤트를 불러오는데 실패했습니다.</div>
+      <div className="w-full max-w-[672px] mx-auto px-4 sm:px-0">
+        <div className="mb-8 space-y-2">
+          <h1 className="text-[30px] font-bold text-[#171717] leading-[1.2] tracking-[-0.012em]">
+            행사 리스트
+          </h1>
+          <p className="text-base text-[#737373] leading-normal tracking-[-0.02em]">
+            Discover and book tickets for the latest tech gatherings.
+          </p>
+        </div>
+        <div className="flex items-center justify-center p-8">
+          <div className="text-[#737373]">등록된 이벤트가 없습니다.</div>
+        </div>
       </div>
     );
   }
@@ -42,7 +50,7 @@ export default function ReservationList() {
 
       {/* Event Cards */}
       <div className="space-y-7">
-        {eventList.map((event, index) => {
+        {initialEvents.map((event, index) => {
           // 각 이벤트에 다른 배지 적용 (예시)
           let badge = "Conference";
 

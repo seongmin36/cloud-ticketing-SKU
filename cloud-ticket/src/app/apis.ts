@@ -7,21 +7,41 @@ interface ApiResponse<T> {
   error?: string;
 }
 
-// 이벤트 목록 조회
+// 이벤트 목록 조회 (서버/클라이언트 겸용)
 export async function getEvents(): Promise<Event[]> {
-  const response = await fetch("/api/events");
+  // 서버 환경인지 확인 (window가 없으면 서버)
+  const isServer = typeof window === "undefined";
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch events");
+  // 서버에서는 절대 URL, 클라이언트에서는 상대 URL
+  const baseUrl = isServer
+    ? process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+    : "";
+
+  try {
+    const response = await fetch(`${baseUrl}/api/events`, {
+      // 서버(SSG)에서는 force-cache, 클라이언트에서는 기본값
+      cache: isServer ? "force-cache" : "default",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch events");
+    }
+
+    const result: ApiResponse<Event[]> = await response.json();
+
+    if (!result.success || !result.data) {
+      throw new Error(result.error || "Failed to fetch events");
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    // 서버에서 에러 시 빈 배열 반환 (빌드 실패 방지)
+    if (isServer) {
+      return [];
+    }
+    throw error;
   }
-
-  const result: ApiResponse<Event[]> = await response.json();
-
-  if (!result.success || !result.data) {
-    throw new Error(result.error || "Failed to fetch events");
-  }
-
-  return result.data;
 }
 
 // 예약 생성
