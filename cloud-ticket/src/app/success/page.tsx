@@ -154,12 +154,20 @@ export default function SuccessPage() {
             </div>
           </div>
 
-          {/* CardFooter - 다운로드 버튼 */}
+          {/* CardFooter - 다운로드 버튼 & 모니터링 버튼 */}
           <div className="px-6 py-6 border-t border-[#F5F5F5]">
-            <button className="w-full h-9 flex items-center justify-center gap-2 bg-white border border-black/10 rounded-lg text-sm font-medium text-[#525252] tracking-[-0.011em] hover:bg-gray-50 active:bg-gray-100 transition-all">
-              <Icon icon={DownloadIcon} size={16} color="#525252" />
-              티켓 다운로드
-            </button>
+            <div className="space-y-3">
+              <button className="w-full h-9 flex items-center justify-center gap-2 bg-white border border-black/10 rounded-lg text-sm font-medium text-[#525252] tracking-[-0.011em] hover:bg-gray-50 active:bg-gray-100 transition-all">
+                <Icon icon={DownloadIcon} size={16} color="#525252" />
+                티켓 다운로드
+              </button>
+              <Link
+                href="/monitor"
+                className="w-full h-9 flex items-center justify-center rounded-lg text-sm font-medium tracking-[-0.011em] bg-[#171717] text-white hover:bg-[#262626] active:bg-[#0a0a0a] transition-all"
+              >
+                모니터링 화면으로 이동
+              </Link>
+            </div>
           </div>
         </div>
       </div>

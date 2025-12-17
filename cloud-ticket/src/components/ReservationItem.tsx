@@ -2,12 +2,12 @@ import Icon from "@/components/common/Icon";
 import CalendarIcon from "@/assets/calendar.svg";
 import PinIcon from "@/assets/pin.svg";
 import { ReservationFormValues, FormErrors, Event } from "@/types";
-import { getEvents } from "@/app/apis";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import dayjs from "dayjs";
 import TicketIcon from "@/assets/ticket.svg";
 
 interface ReserveationProps {
+  event?: Event;
   eventId: number;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   successMessage: string;
@@ -20,6 +20,7 @@ interface ReserveationProps {
 }
 
 export default function ReservationItem({
+  event,
   eventId,
   handleSubmit,
   successMessage,
@@ -28,22 +29,10 @@ export default function ReservationItem({
   isSubmitting,
   handleInputChange,
 }: ReserveationProps) {
-  const [events, setEvents] = useState<Event[]>([]);
-
+  // eventId 변경 추적용(디버깅용) 로그 유지
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const events = await getEvents();
-        setEvents(events);
-      } catch (error) {
-        console.error(error);
-        throw new Error("Failed to fetch events");
-      }
-    };
-    fetchEvents();
-  }, []);
-
-  const event = events.find((event) => event.id === eventId);
+    console.log("ReservationItem eventId:", eventId);
+  }, [eventId]);
   const startAt = dayjs(event?.start_at).format("YYYY.MM.DD • HH:mm A");
 
   return (

@@ -1,33 +1,23 @@
-"use client";
+import Link from "next/link";
+import { ROUTES } from "@/lib/constants";
+import MonitoringClient from "./ui/MonitoringClient";
 
-import { useQuery } from "@tanstack/react-query";
-
-export default function MonitorPage() {
-  const q = useQuery({
-    queryKey: ["vm-metrics", "cpu"],
-    queryFn: async () => {
-      const res = await fetch("/api/metrics/vm");
-      if (!res.ok) throw new Error("metrics fetch failed");
-      return res.json() as Promise<{
-        metrics: { timeStamp: string; average: number | null }[];
-      }>;
-    },
-    refetchInterval: 10_000,
-  });
-
-  if (q.isLoading) return <div>loading...</div>;
-  if (q.isError) return <div>error</div>;
-
+export default function Page() {
   return (
-    <div>
-      <h1>VM CPU (avg)</h1>
-      <ul>
-        {q.data?.metrics.slice(-10).map((p) => (
-          <li key={p.timeStamp}>
-            {p.timeStamp} : {p.average ?? "null"}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <main className="min-h-screen bg-[#FAFAFA] p-6 flex flex-col">
+      <div className="w-full max-w-5xl mx-auto flex-1 flex flex-col gap-4">
+        <div className="flex justify-end">
+          <Link
+            href={ROUTES.SUCCESS}
+            className="inline-flex items-center justify-center rounded-lg border border-black/10 bg-white px-4 py-2 text-sm font-medium text-[#525252] hover:bg-gray-50 active:bg-gray-100 transition-all"
+          >
+            티켓 화면으로 돌아가기
+          </Link>
+        </div>
+        <div className="flex-1">
+          <MonitoringClient />
+        </div>
+      </div>
+    </main>
   );
 }

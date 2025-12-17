@@ -9,11 +9,18 @@ import ReservationItem from "./ReservationItem";
 import { ReservationFormValues, FormErrors } from "@/types";
 import { useCreateReservation } from "@/app/hooks/useCreateReservation";
 
+import type { Event } from "@/types";
+
+type ReservationCardProps = {
+  event?: Event;
+};
+
 // 예약 카드 컴포넌트
-export default function ReservationCard() {
+export default function ReservationCard({ event }: ReservationCardProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const eventParams = Number(searchParams.get("event_id"));
+  const eventIdFromQuery = searchParams.get("event_id");
+  const eventParams = Number(eventIdFromQuery ?? event?.id ?? 0);
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [successMessage, setSuccessMessage] = useState("");
@@ -105,6 +112,7 @@ export default function ReservationCard() {
   return (
     <div className="w-full max-w-[448px] bg-white rounded-[14px] border border-[#E5E5E5] shadow-[0px_1px_2px_-1px_rgba(0,0,0,0.1),0px_1px_3px_0px_rgba(0,0,0,0.1)]">
       <ReservationItem
+        event={event}
         eventId={eventParams}
         handleSubmit={handleSubmit}
         successMessage={successMessage}
